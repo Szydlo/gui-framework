@@ -1,2 +1,11 @@
 <meta>
+	<!-- oop stuff -->
+	<script src="class_c.lua" type="client" />
+
+	<!-- elements -->
+	<script src="renderer_c.lua" type="client" />
+	<script src="main_c.lua" type="client" />
+	<script src="window_c.lua" type="client" />
+	<script src="button_c.lua" type="client" />
+
 </meta>

@@ -34,7 +34,7 @@ end
 Element = {}
 
 function Element:init(pos, size, color)
-	self.pos, self.size, self.color = pos, size, color
+	self.pos, self.size, self.color, self.pressed = pos, size, color, false
 
 	elementsToDraw[self] = self
 end

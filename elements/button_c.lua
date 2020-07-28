@@ -15,4 +15,3 @@ function Button:click()
 	self:onClick()
 end
 
-function Button:onClick() end

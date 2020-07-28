@@ -5,13 +5,14 @@
 	<script src="oop/ooplib.lua" type="client" />
 	<script src="oop/classlib.lua" type="client" />
 
+	<!-- other stuff -->
+	<script src="config.lua" type="shared" />
+
 	<!-- elements -->
 	<script src="elements/renderer_c.lua" type="client" />
 	<script src="elements/main_c.lua" type="client" />
 	<script src="elements/window_c.lua" type="client" />
 	<script src="elements/button_c.lua" type="client" />
 	<script src="elements/input_c.lua" type="client" />
-
-	<!-- other stuff -->
-	<script src="config.lua" type="shared" />
+	<script src="elements/list_c.lua" type="client" />
 </meta>

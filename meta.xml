@@ -8,6 +8,10 @@
 	<!-- other stuff -->
 	<script src="config.lua" type="shared" />
 
+	<!-- assets -->
+	<file src="assets/clear.png" />
+	<file src="assets/selected.png" />
+
 	<!-- elements -->
 	<script src="elements/renderer_c.lua" type="client" />
 	<script src="elements/main_c.lua" type="client" />
@@ -15,4 +19,5 @@
 	<script src="elements/button_c.lua" type="client" />
 	<script src="elements/input_c.lua" type="client" />
 	<script src="elements/list_c.lua" type="client" />
+	<script src="elements/checkbox_c.lua" type="client" />
 </meta>

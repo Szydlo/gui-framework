@@ -1,6 +1,6 @@
 List = inherit(Element)
 
--- @ TODO/FIXME DODAĆ PRZESUWANIE SCROLLA KURSORSEM / POZMIENIAĆ WSZYSTKO NA ZMIENNE
+-- @ TODO/FIXME DODAĆ PRZESUWANIE SCROLLA KURSORSEM / POZMIENIAĆ WSZYSTKO NA ZMIENNE / PRZEROBIĆ ROWY NA OSOBNĄ KLASE
 
 function List:constructor(pos, size, color, hoverColor, textColor)
 	self:initl("", pos, size, color, hoverColor, textColor)

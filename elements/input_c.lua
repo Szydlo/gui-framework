@@ -1,7 +1,7 @@
 Input = inherit(Element)
 
 -- @ TODO/FIXME USUWANIE BACKSPACE Z ZNAKAMI / KOPIOWANIE TEKSTU / WYKRYWANIE POZYCJI MYSZKI I WSTAWIANIE TAM CARRET / ZROBIĆ USUWANIE NA TICKI
--- @ TODO/FIXME DODAĆ MAXCHARACTERS
+-- @ TODO/FIXME DODAĆ MAXCHARACTERS / ZMIENIĆ EVENTY NA AUTENTYCZNY KEY
 
 function Input:constructor(placeholder, pos, size, color, hoverColor, textColor, carretColor, maxLines, maxCharacters)
 	self:initl("", pos, size, color, hoverColor, textColor)

@@ -1,0 +1,1 @@
+Combobox = inherit(Element)

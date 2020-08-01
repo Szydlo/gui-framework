@@ -1,0 +1,1 @@
+Proggesbar = inherit(Element)

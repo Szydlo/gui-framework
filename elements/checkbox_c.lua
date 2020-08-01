@@ -21,4 +21,4 @@ function Checkbox:draw()
 	dxDrawText(self.text, self.pos.x + self.size.y + 2, self.pos.y, self.pos+self.size, self.textColor, 1.3, 1.3, "arial", "left", "center")
 end
 
-check = new(Checkbox, "Zapamiętaj mnie", Vector2(200, 200), Vector2(300, 25))
+--check = new(Checkbox, "Zapamiętaj mnie", Vector2(200, 200), Vector2(300, 25))

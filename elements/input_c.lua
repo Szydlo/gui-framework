@@ -123,4 +123,4 @@ function Input:character(character)
 	self:addText(character)
 end
 
---inp = new(Input, "xddd", Vector2(300, 50), Vector2(300, 500), tocolor(32,32,32), tocolor(55,55,55), tocolor(255,255,255), tocolor(255,0,0), 128, 2)
+--inp = new(Input, "xddd", Vector2(300, 50), Vector2(300, 500), tocolor(32,32,32), tocolor(55,55,55), tocolor(255,255,255), tocolor(255,0,0), 128, 5)

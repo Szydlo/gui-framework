@@ -29,3 +29,11 @@ addEventHandler("onClientClick", root, function(button, state)
 		end
 	end
 end)
+
+addEventHandler("onClientKey", root, function(button, press)
+	for i,v in pairs(elementsToDraw) do
+		if v.key then
+			v:key(button, press)
+		end
+	end
+end)

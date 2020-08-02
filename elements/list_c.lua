@@ -4,7 +4,7 @@ function List:constructor(pos, size, color, hoverColor, textColor, rowHeight)
 	self:initl("", pos, size, color, hoverColor, textColor)
 
 	self.rt = dxCreateRenderTarget(self.size, true)
-	self.rowsHeight, self.schrollCache, self.hoveredRow, self.selectedRow = 0,0,-1, -1
+	self.rowsHeight, self.schrollCache, self.hoveredRow, self.selectedRow = 0,0,-1,-1
 	self.rowHeight, self.barSize = rowHeight, 10
 	self.rows = {}
 end
@@ -20,7 +20,11 @@ function List:clear()
 end
 
 function List:click()
-	self.selectedRow = self.hoveredRow ~= -1 and self.hoveredRow or -1
+	self.selectedRow = self.hoveredRow ~= -1 and self.rows[self.hoveredRow] or -1
+
+	if self.selectedRow ~= -1 then
+		self:onSelect(self.selectedRow)
+	end
 end
 
 function List:key(key, press)
@@ -45,6 +49,9 @@ function List:draw()
 			color = 255 
 			self.hoveredRow = i
 		else 
+			if self.hoveredRow == i then 
+				self.hoveredRow = -1
+			end
 			color = i % 2 == 0 and 32 or 64
 		end
 

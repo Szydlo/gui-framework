@@ -23,4 +23,5 @@
 	<script src="elements/label_c.lua" type="client" />
 	<script src="elements/image_c.lua" type="client" />
 	<script src="elements/tab_c.lua" type="client" />
+	<script src="elements/proggresbar_c.lua" type="client" />
 </meta>

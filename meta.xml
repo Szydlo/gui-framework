@@ -1,11 +1,28 @@
 <meta>
+	<oop>true</oop>
+
 	<!-- oop stuff -->
-	<script src="class_c.lua" type="client" />
+	<script src="oop/ooplib.lua" type="client" />
+	<script src="oop/classlib.lua" type="client" />
+
+	<!-- other stuff -->
+	<script src="config.lua" type="shared" />
+
+	<!-- assets -->
+	<file src="assets/clear.png" />
+	<file src="assets/selected.png" />
 
 	<!-- elements -->
-	<script src="renderer_c.lua" type="client" />
-	<script src="main_c.lua" type="client" />
-	<script src="window_c.lua" type="client" />
-	<script src="button_c.lua" type="client" />
-
+	<script src="elements/renderer_c.lua" type="client" />
+	<script src="elements/main_c.lua" type="client" />
+	<script src="elements/window_c.lua" type="client" />
+	<script src="elements/button_c.lua" type="client" />
+	<script src="elements/input_c.lua" type="client" />
+	<script src="elements/list_c.lua" type="client" />
+	<script src="elements/checkbox_c.lua" type="client" />
+	<script src="elements/label_c.lua" type="client" />
+	<script src="elements/image_c.lua" type="client" />
+	<script src="elements/tab_c.lua" type="client" />
+	<script src="elements/proggresbar_c.lua" type="client" />
+	<script src="elements/combobox_c.lua" type="client" />
 </meta>

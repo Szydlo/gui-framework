@@ -62,7 +62,7 @@ function List:draw()
 	end
 end
 
-list = new(List, Vector2(500, 500), Vector2(300, 500), tocolor(32,32,32), tocolor(64,64,64), tocolor(255,255,255))
+--[[list = new(List, Vector2(500, 500), Vector2(300, 500), tocolor(32,32,32), tocolor(64,64,64), tocolor(255,255,255))
 list:addRow("halo"..1)
 list:addRow("halo"..2)
 list:addRow("halo"..3)
@@ -78,4 +78,4 @@ list:addRow("halo"..12)
 list:addRow("halo"..13)
 list:addRow("halo"..14)
 list:addRow("halo"..15)
-list:addRow("halo"..16)
+list:addRow("halo"..16)]]

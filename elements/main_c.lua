@@ -39,6 +39,10 @@ function Element:init(pos, size, color)
 	elementsToDraw[self] = self
 end
 
+function Element:drawElement(drawe)
+	elementsToDraw[self] = drawe and self or nil
+end
+
 function Element:initl(text, pos, size, color, hoverColor, textColor)
 	self:init(pos, size, color)
 	self.text, self.hoverColor, self.textColor, self.actualColor = text, hoverColor, textColor, color

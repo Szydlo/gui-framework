@@ -1,8 +1,6 @@
 Window = inherit(Element)
 
--- @ TODO/FIXME NAPRAWIĆ PRZESUWANIE
-
-function Window:constructor(pos, size, color)
+function Window:constructor(pos, size, color, elements)
 	self:init(pos, size, color)
 	self.movable =	true
 
@@ -12,6 +10,12 @@ function Window:constructor(pos, size, color)
 
 	self.cursormov = bind(Window.cursorMove, self)
 	addEventHandler("onClientCursorMove", root, self.cursormov)
+
+	if elements then
+		for i,v in pairs(elements) do
+			v:drawElement(false)
+		end
+	end 
 end
 
 function Window:click()
@@ -25,13 +29,19 @@ function Window:cursorMove(_, _, x, y)
 	if isMouseInPosition(self.pos, self.size) and getKeyState("mouse1") then
 		local delta = Vector2(x - self.lastPos.x, y - self.lastPos.y)
 		self.pos = self.lastpos + delta
+
+		for i,v in pairs(elements) do
+			v.pos = v.pos + delta
+		end
 	end
 end
 
 function Window:draw()
 	dxDrawRectangle(self.pos, self.size, self.color)
+
+	if elements then
+		for i,v in pairs(elements) do
+			elements:draw()
+		end
+	end
 end
-
-wn = new(Window, Vector2(0, 0), Vector2(300, 300), tocolor(32,32,32))
-
-showCursor(true)

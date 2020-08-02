@@ -46,7 +46,3 @@ function Combobox:draw()
 	dxDrawText("▼", self.pos.x, self.pos.y, self.pos.x + size.x - 5, self.pos.x + size.y, tocolor(255,255,255), 1.2, 1.2, "default", "right", "center")	
 	dxDrawText(self.selectedRow, self.pos, self.pos + size, tocolor(255,255,255), 1.2, 1.2, "default", "center", "center")
 end
-
-combo = new(Combobox, Vector2(400, 400), Vector2(200, 300), tocolor(32,32,32))
-combo:addRow("elo1")
-combo:addRow("elo2")

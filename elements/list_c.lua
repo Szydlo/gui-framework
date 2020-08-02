@@ -74,21 +74,3 @@ function List:draw()
 		self.schrollCache = isScrollActive and math.min(math.max((realpos.y - isScrollActive ) / ratio, 0), self.rowsHeight - 500)	or self.schrollCache		
 	end
 end
-
-list = new(List, Vector2(500, 500), Vector2(300, 500), tocolor(32,32,32), tocolor(64,64,64), tocolor(255,255,255), 55)
-list:addRow("halo"..1)
-list:addRow("halo"..2)
-list:addRow("halo"..3)
-list:addRow("halo"..4)
-list:addRow("halo"..5)
-list:addRow("halo"..6)
-list:addRow("halo"..7)
-list:addRow("halo"..8)
-list:addRow("halo"..9)
-list:addRow("halo"..10)
-list:addRow("halo"..11)
-list:addRow("halo"..12)
-list:addRow("halo"..13)
-list:addRow("halo"..14)
-list:addRow("halo"..15)
-list:addRow("halo"..16)

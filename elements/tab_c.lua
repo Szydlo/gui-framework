@@ -55,11 +55,3 @@ function Tabpanel:draw()
 		end
 	end
 end
-
---[[
-tab = new(Tabpanel, Vector2(300, 300), Vector2(600, 400), tocolor(32,32,32), tocolor(64,64,64))
-aaa = tab:addTab("new tab")
-	aaa:addElement(new(Input, "xddd", Vector2(300, 50), Vector2(50, 50), tocolor(32,32,32), tocolor(55,55,55), tocolor(255,255,255), tocolor(255,0,0), 128, 5))
-bbb = tab:addTab("new tab2")
-
-tab:setSelectedTab(aaa)]]

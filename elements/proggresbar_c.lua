@@ -9,5 +9,3 @@ function Proggesbar:draw()
 	dxDrawRectangle(self.pos, self.size, self.bgcolor)
 	dxDrawRectangle(self.pos, self.size.x * (self.amount / self.max), self.size.y, self.color)
 end
-
---progg = new(Proggesbar, Vector2(500, 500), Vector2(500, 50), tocolor(32,32,32), tocolor(255,0,0), 255, 122)

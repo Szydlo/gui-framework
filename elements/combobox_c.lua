@@ -16,4 +16,4 @@ function Combobox:draw()
 	dxDrawText(self.rows[self.selectedRow] or "", self.pos, self.pos + size, tocolor(255,255,255), 1.2, 1.2, "default", "center", "center")
 end
 
-combo = new(Combobox, Vector2(400, 400), Vector2(200, 300), tocolor(32,32,32))
+--combo = new(Combobox, Vector2(400, 400), Vector2(200, 300), tocolor(32,32,32))

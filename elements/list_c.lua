@@ -60,7 +60,7 @@ function List:draw()
 	end
 
 	dxSetRenderTarget()
-	dxDrawImage(self.pos, self.size.x - self.barSize, self.size.y, self.rt)
+	dxDrawImage(self.pos, self.size.x - (self.rowsHeight > self.size.y and self.barSize or 0), self.size.y, self.rt)
 
 	if self.rowsHeight > self.size.y then
 		local ratio = self.size.y / self.rowsHeight

@@ -49,6 +49,14 @@ function Element:initl(text, pos, size, color, hoverColor, textColor)
 end
 
 function Element:destroy()
+	if self.elements then
+		for i,v in pairs(self.elements) do
+			v:destroy()
+		end
+	end
+
 	elementsToDraw[self] = nil
 	self = nil
 end
+
+-- @ TODO/FIXME SKALOWANIE / FONTY / GOLDMASTER WERSJA

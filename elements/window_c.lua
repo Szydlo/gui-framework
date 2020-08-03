@@ -1,6 +1,6 @@
 Window = inherit(Element)
 
-function Window:constructor(pos, size, color, elements)
+function Window:constructor(pos, size, color)
 	self:init(pos, size, color)
 	self.movable =	true
 
@@ -8,21 +8,26 @@ function Window:constructor(pos, size, color, elements)
 	self.lastPos = getRealCursorPosition()
 	self.cursorPos = Vector2(0,0)
 
+	self.elements = {}
+
 	self.cursormov = bind(Window.cursorMove, self)
 	addEventHandler("onClientCursorMove", root, self.cursormov)
-
-	if elements then
-		for i,v in pairs(elements) do
-			v:drawElement(false)
-		end
-	end 
 end
 
 function Window:click()
 	if self.movable then
 		self.lastPos = getRealCursorPosition()
 		self.lastpos = self.pos
+
+		for i,v in pairs(self.elements) do
+			v.lastpos = v.pos
+		end
 	end
+end
+
+function Window:addChild(element)
+	table.insert(self.elements, element)
+	return element
 end
 
 function Window:cursorMove(_, _, x, y)
@@ -30,18 +35,12 @@ function Window:cursorMove(_, _, x, y)
 		local delta = Vector2(x - self.lastPos.x, y - self.lastPos.y)
 		self.pos = self.lastpos + delta
 
-		for i,v in pairs(elements) do
-			v.pos = v.pos + delta
+		for i,v in pairs(self.elements) do 
+			v.pos = v.lastpos + delta
 		end
 	end
 end
 
 function Window:draw()
 	dxDrawRectangle(self.pos, self.size, self.color)
-
-	if elements then
-		for i,v in pairs(elements) do
-			elements:draw()
-		end
-	end
 end

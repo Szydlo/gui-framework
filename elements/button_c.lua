@@ -6,7 +6,7 @@ end
 
 function Button:draw()
 	dxDrawRectangle(self.pos, self.size, self.actualColor)
-	dxDrawText(self.text, self.pos, self.pos + self.size, self.textColor)
+	dxDrawText(self.text, self.pos, self.pos + self.size, self.textColor, 1.4, 1.4, "default", "center", "center")
 
 	self.actualColor = isMouseInPosition(self.pos, self.size) and self.hoverColor or self.color
 end
@@ -14,4 +14,3 @@ end
 function Button:click()
 	self:onClick()
 end
-

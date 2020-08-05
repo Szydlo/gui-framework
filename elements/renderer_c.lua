@@ -2,7 +2,9 @@ elementsToDraw = {}
 
 addEventHandler("onClientRender", root, function()
 	for i,v in pairs(elementsToDraw) do
-		v:draw()
+		if v.draw and v.canDraw then
+			v:draw()
+		end
 	end
 end)
 

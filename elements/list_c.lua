@@ -38,7 +38,7 @@ function List:key(key, press)
 end
 
 function List:draw()
-	dxDrawRectangle(self.pos, self.size, self.color)
+	dxDrawRectangle(self.pos, self.size, self.color, true)
 	dxSetRenderTarget(self.rt, true)
 
 	for i,v in pairs(self.rows) do 
@@ -56,11 +56,11 @@ function List:draw()
 		end
 
 		dxDrawRectangle(0, offset - self.schrollCache, self.size.x, self.rowHeight, tocolor(color, 0, 0))
-		dxDrawText(v, 0, offset - self.schrollCache, self.size.x, self.rowHeight + offset - self.schrollCache, self.textColor, 1.5, 1.5, "default", "center", "center")
+		dxDrawText(v, 0, offset - self.schrollCache, self.size.x, self.rowHeight + offset - self.schrollCache, self.textColor, self.textScale, self.textScale, self.font, "center", "center")
 	end
 
 	dxSetRenderTarget()
-	dxDrawImage(self.pos, self.size.x - (self.rowsHeight > self.size.y and self.barSize or 0), self.size.y, self.rt)
+	dxDrawImage(self.pos, self.size.x - (self.rowsHeight > self.size.y and self.barSize or 0), self.size.y, self.rt, 0,0,0, tocolor(255,255,255), true)
 
 	if self.rowsHeight > self.size.y then
 		local ratio = self.size.y / self.rowsHeight
@@ -68,7 +68,7 @@ function List:draw()
 		local scrolly = ratio * self.schrollCache
 
 		local pos, size = Vector2(self.pos.x + self.size.x - self.barSize, self.pos.y + scrolly), Vector2(self.barSize, size)
-		dxDrawRectangle(pos, size, tocolor(0,64,0))
+		dxDrawRectangle(pos, size, tocolor(0,64,0), true)
 
 		local realpos = getRealCursorPosition()
 

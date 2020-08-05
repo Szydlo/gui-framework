@@ -30,22 +30,30 @@ function getRealCursorPosition()
 	return xy * wh
 end 
 --end community
+local fonts = {}
+
+function Font(font, size)
+	if not fonts.font then fonts.font = {} end
+	fonts.font[size] = dxCreateFont("assets/fonts/"..font..".ttf", size)
+	return fonts.font[size]
+end
 
 Element = {}
 
-function Element:init(pos, size, color)
-	self.pos, self.size, self.color, self.pressed = pos, size, color, false
+function Element:init(pos, size)
+	self.pos, self.size, self.pressed, self.font, self.textScale = pos, size, false, "default", 1
 
 	elementsToDraw[self] = self
+	elementsToDraw[self].canDraw = true
 end
 
 function Element:drawElement(drawe)
-	elementsToDraw[self] = drawe and self or nil
+	elementsToDraw[self].canDraw = drawe
 end
 
-function Element:initl(text, pos, size, color, hoverColor, textColor)
+function Element:initl(text, pos, size)
 	self:init(pos, size, color)
-	self.text, self.hoverColor, self.textColor, self.actualColor = text, hoverColor, textColor, color
+	self.text = text
 end
 
 function Element:destroy()
@@ -59,4 +67,4 @@ function Element:destroy()
 	self = nil
 end
 
--- @ TODO/FIXME SKALOWANIE / FONTY / GOLDMASTER WERSJA
+-- @ TODO/FIXME SKALOWANIE / ANIMACJE / SLIDER / GOLDMASTER WERSJA

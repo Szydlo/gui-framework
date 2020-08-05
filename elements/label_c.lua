@@ -6,5 +6,5 @@ function Label:constructor(text, pos, size, color)
 end
 
 function Label:draw()
-	dxDrawText(self.text, self.pos, self.size, self.color)
+	dxDrawText(self.text, self.pos, self.size, self.color, self.textScale, self.textScale, self.font)
 end

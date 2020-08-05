@@ -26,6 +26,7 @@ function Window:click()
 end
 
 function Window:addChild(element)
+	element:drawElement(false)
 	table.insert(self.elements, element)
 	return element
 end
@@ -35,12 +36,12 @@ function Window:cursorMove(_, _, x, y)
 		local delta = Vector2(x - self.lastPos.x, y - self.lastPos.y)
 		self.pos = self.lastpos + delta
 
-		for i,v in pairs(self.elements) do 
-			v.pos = v.lastpos + delta
-		end
+		for i,v in pairs(self.elements) do v.pos = v.lastpos + delta end
 	end
 end
 
 function Window:draw()
 	dxDrawRectangle(self.pos, self.size, self.color)
+
+	for i,v in pairs(self.elements) do v:draw() end
 end

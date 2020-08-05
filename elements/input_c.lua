@@ -1,21 +1,22 @@
 Input = inherit(Element)
 
-function Input:constructor(placeholder, pos, size, color, hoverColor, textColor, carretColor, maxLines, maxCharacters)
+function Input:constructor(placeholder, pos, size, style, maxLines, maxCharacters)
 	self:initl("", pos, size, color, hoverColor, textColor)
-	self.placeholder, self.carretColor = placeholder, carretColor
+	self.placeholder = placeholder
 	self.carretVisible = false
+
+	self.style = style
 
 	self.tableText = {}
 	self.tableText[1] = placeholder
 
 	self.carretPosition = 0
 	self.carretLine = 1
-	self.textSize = 2
 	self.backspaceTick = 0
 
 	self.maxCharacters, self.maxLines = maxCharacters or 128, maxLines or 1
 
-	_, self.carretSize = dxGetTextSize("|", 0, self.textSize, self.textSize, "defualt")
+	_, self.carretSize = dxGetTextSize("|", 0, self.textScale, self.textScale, self.font)
 
 	self.ekey = bind(Input.keye, self)
 	self.echaracter = bind(Input.character, self)
@@ -31,7 +32,7 @@ function Input:addText(text)
 	local temp = self.tableText[self.carretLine]..text
 	if self:calculateMaxCharacters() == self.maxCharacters then return end
 
-	if dxGetTextWidth(temp, self.textSize, "defualt") >= self.size.x then
+	if dxGetTextWidth(temp, self.textScale, self.font) >= self.size.x then
 		self:newLine()
 		self.tableText[self.carretLine] = self.tableText[self.carretLine]..text
 	else
@@ -87,15 +88,15 @@ function Input:newLine()
 end
 
 function Input:draw()
-	dxDrawRectangle(self.pos, self.size, self.actualColor)
+	self.style:input(self.pos, self.size)
 
 	for i,v in pairs(self.tableText) do
-		dxDrawText(v, Vector2(self.pos.x, self.pos.y + (self.carretSize * i)-self.carretSize), self.pos + self.size, self.textColor, self.textSize, self.textSize)
+		dxDrawText(v, Vector2(self.pos.x, self.pos.y + (self.carretSize * i)-self.carretSize), self.pos + self.size, self.textColor, self.textScale, self.textScale, self.font)
 	end
 
 	if self.carretVisible then
     	local textWidth = dxGetTextWidth(utf8.sub(self.tableText[self.carretLine], 1, self.carretPosition), 2)
-		dxDrawRectangle(Vector2(self.pos.x+textWidth, self.pos.y+1.5  + (self.carretSize * self.carretLine)-self.carretSize), Vector2(0.8, self.carretSize), self.carretColor)
+		dxDrawRectangle(Vector2(self.pos.x+textWidth, self.pos.y+1.5  + (self.carretSize * self.carretLine)-self.carretSize), Vector2(0.8, self.carretSize), self.style.carretColor)
 
 		if getKeyState("backspace") then
 			local now = getTickCount()
@@ -125,7 +126,7 @@ function Input:click()
 	for i,v in pairs(self.tableText) do string = string..v.."\n" end
 
 	local realpos = getRealCursorPosition()
-	local x, y = dxGetTextSize(string, 0, self.textSize, self.textSize, "defualt")
+	local x, y = dxGetTextSize(string, 0, self.textScale, self.textScale, self.font)
 
 	for i=0, math.floor(self.size.y/self.carretSize) do
 		if (i*self.carretSize) > (realpos.y - self.pos.y) then
@@ -133,7 +134,7 @@ function Input:click()
 				self.carretLine = i 
 
 				for i=0, #self.tableText[i] do 
-					local textw = dxGetTextWidth(utf8.sub(self.tableText[self.carretLine], 1, i), self.textSize)
+					local textw = dxGetTextWidth(utf8.sub(self.tableText[self.carretLine], 1, i), self.textScale, self.font)
 				
 					if (realpos.x - self.pos.x) < textw then
 						self.carretPosition = i

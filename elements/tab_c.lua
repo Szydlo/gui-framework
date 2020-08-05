@@ -46,7 +46,7 @@ function Tabpanel:draw()
 		local color = isMouseInPosition(pos, Vector2(150, self.tabHeight)) and tocolor(64,64,64) or self.color
 
 		dxDrawRectangle(pos, 150, self.tabHeight, color)
-		dxDrawText(v.name, pos, pos + Vector2(150, self.tabHeight), tocolor(255,255,255), 1.3, 1.3, "default", "center", "center")
+		dxDrawText(v.name, pos, pos + Vector2(150, self.tabHeight), tocolor(255,255,255), self.textScale, self.textScale, self.font, "center", "center")
 
 		if v.name == self.selectedTab then
 			for j, k in pairs(v.elements) do 

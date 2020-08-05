@@ -42,7 +42,9 @@ function Combobox:draw()
 	local size = Vector2(self.size.x, self.basicHeight)
 	local color = isMouseInPosition(self.pos, size) and tocolor(64,64,64) or self.color
 
+	self.list.pos = Vector2(self.pos.x, self.pos.y + self.basicHeight)
+
 	dxDrawRectangle(self.pos, size, color)
 	dxDrawText("▼", self.pos, self.pos.x-5 + size.x, self.pos.y + size.y, tocolor(255,255,255), 1.2, 1.2, "default", "right", "center")	
-	dxDrawText(self.selectedRow, self.pos, self.pos + size, tocolor(255,255,255), 1.2, 1.2, "default", "center", "center")
+	dxDrawText(self.selectedRow, self.pos, self.pos + size, tocolor(255,255,255), self.textScale, self.textScale, self.font, "center", "center")
 end

@@ -1,5 +1,5 @@
 config = {
 	useRt = false,
 	style = nil,
-	scale = false
+	scale = true
 }

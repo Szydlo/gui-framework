@@ -30,6 +30,11 @@ function getRealCursorPosition()
 	return xy * wh
 end 
 --end community
+local sx,sy = guiGetScreenSize()
+local baseX = 1920
+local zoom = 1 
+local minZoom = 2
+if sx < baseX then zoom = math.min(minZoom, baseX/sx) end 
 local fonts = {}
 
 function Font(font, size)
@@ -40,8 +45,15 @@ end
 
 Element = {}
 
+function Element:scale()
+	self.pos = Vector2(self.pos.x/zoom, self.pos.y/zoom)
+	self.size = Vector2(self.size.x/zoom, self.size.y/zoom)
+end
+
 function Element:init(pos, size)
-	self.pos, self.size, self.pressed, self.font, self.textScale = pos, size, false, "default", 1
+	self.pos, self.size, self.pressed, self.font, self.textScale, self.isScalable = pos, size, false, "default", 1, config.scale
+
+	if self.isScalable then self:scale() end
 
 	elementsToDraw[self] = self
 	elementsToDraw[self].canDraw = true
@@ -49,6 +61,16 @@ end
 
 function Element:drawElement(drawe)
 	elementsToDraw[self].canDraw = drawe
+end
+
+function Element:setPos(pos)
+	self.pos = pos
+	if self.isScalable then self:scale() end
+end
+
+function Element:setSize(size)
+	self.size = size
+	if self.isScalable then self:scale() end
 end
 
 function Element:initl(text, pos, size)
@@ -67,4 +89,4 @@ function Element:destroy()
 	self = nil
 end
 
--- @ TODO/FIXME SKALOWANIE / ANIMACJE / SLIDER / GOLDMASTER WERSJA
+-- @ TODO/FIXME  ANIMACJE / SLIDER / GOLDMASTER WERSJA

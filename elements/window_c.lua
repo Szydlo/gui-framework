@@ -1,10 +1,11 @@
 Window = inherit(Element)
 
-function Window:constructor(pos, size, color)
-	self:init(pos, size, color)
+function Window:constructor(pos, size, style)
+	self:init(pos, size)
 	self.movable =	true
+	self.style = style
 
-	self.moveWindow = false
+	self.isMovable = false
 	self.lastPos = getRealCursorPosition()
 	self.cursorPos = Vector2(0,0)
 
@@ -32,7 +33,7 @@ function Window:addChild(element)
 end
 
 function Window:cursorMove(_, _, x, y)
-	if isMouseInPosition(self.pos, self.size) and getKeyState("mouse1") then
+	if isMouseInPosition(self.pos, self.size) and getKeyState("mouse1") and self.isMovable then
 		local delta = Vector2(x - self.lastPos.x, y - self.lastPos.y)
 		self.pos = self.lastpos + delta
 
@@ -41,7 +42,7 @@ function Window:cursorMove(_, _, x, y)
 end
 
 function Window:draw()
-	dxDrawRectangle(self.pos, self.size, self.color)
+	self.style:window(self.pos, self.size)
 
 	for i,v in pairs(self.elements) do v:draw() end
 end

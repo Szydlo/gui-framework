@@ -73,6 +73,16 @@ function Element:setSize(size)
 	if self.isScalable then self:scale() end
 end
 
+function Element:move(_from, _to, _easing, _time)
+	animations[self] = {from = _from, to = _to, easing = _easing, time = _time, start = getTickCount()}
+
+	if self.elements then
+		for i,v in pairs(self.elements) do 
+			v.from = v.pos
+		end
+	end
+end
+
 function Element:initl(text, pos, size)
 	self:init(pos, size, color)
 	self.text = text
@@ -89,4 +99,4 @@ function Element:destroy()
 	self = nil
 end
 
--- @ TODO/FIXME  ANIMACJE / SLIDER / GOLDMASTER WERSJA
+-- @ TODO/FIXME SLIDER / GOLDMASTER WERSJA

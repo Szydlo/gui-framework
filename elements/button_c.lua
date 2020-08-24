@@ -1,8 +1,8 @@
 Button = inherit(Element)
 
 function Button:constructor(text, pos, size, style)
-	self.style = style
-	self:initl(text, pos, size, _, _, _)
+	self:init(pos, size, style)
+	self.text = text
 end
 
 function Button:draw()

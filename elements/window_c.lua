@@ -1,9 +1,8 @@
 Window = inherit(Element)
 
 function Window:constructor(pos, size, style)
-	self:init(pos, size)
+	self:init(pos, size, style)
 	self.movable =	true
-	self.style = style
 
 	self.isMovable = false
 	self.lastPos = getRealCursorPosition()

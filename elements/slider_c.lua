@@ -1,7 +1,7 @@
 Slider = inherit(Element)
 
-function Slider:constructor(pos, size, color, max, amount)
-	self:init(pos, size, color)
+function Slider:constructor(pos, size, style, max, amount)
+	self:init(pos, size, style)
 	self.max, self.amount = max, amount
 	self.dotPos = Vector2(self.pos.x+1, self.pos.y-2)
 end

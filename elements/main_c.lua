@@ -50,8 +50,8 @@ function Element:scale()
 	self.size = Vector2(self.size.x/zoom, self.size.y/zoom)
 end
 
-function Element:init(pos, size)
-	self.pos, self.size, self.pressed, self.font, self.textScale, self.isScalable = pos, size, false, "default", 1, config.scale
+function Element:init(pos, size, style)
+	self.pos, self.size, self.pressed, self.font, self.textScale, self.isScalable, self.style = pos, size, false, "default", 1, config.scale, style
 
 	if self.isScalable then self:scale() end
 
@@ -81,11 +81,6 @@ function Element:move(_from, _to, _easing, _time)
 			v.from = v.pos
 		end
 	end
-end
-
-function Element:initl(text, pos, size)
-	self:init(pos, size, color)
-	self.text = text
 end
 
 function Element:destroy()

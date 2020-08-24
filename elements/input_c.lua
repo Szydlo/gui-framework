@@ -1,11 +1,10 @@
 Input = inherit(Element)
 
 function Input:constructor(placeholder, pos, size, style, maxLines, maxCharacters)
-	self:initl("", pos, size, color, hoverColor, textColor)
+	self:init(pos, size, style)
 	self.placeholder = placeholder
+	self.text = ""
 	self.carretVisible = false
-
-	self.style = style
 
 	self.tableText = {}
 	self.tableText[1] = placeholder
@@ -88,14 +87,15 @@ function Input:newLine()
 end
 
 function Input:draw()
-	self.style:input(self.pos, self.size)
-
+	self.style:input(self.pos, self.size, self.carretVisible)
+	_, self.carretSize = dxGetTextSize("|", 0, self.textScale, self.textScale, self.font)
+	
 	for i,v in pairs(self.tableText) do
 		dxDrawText(v, Vector2(self.pos.x, self.pos.y + (self.carretSize * i)-self.carretSize), self.pos + self.size, self.textColor, self.textScale, self.textScale, self.font)
 	end
 
 	if self.carretVisible then
-    	local textWidth = dxGetTextWidth(utf8.sub(self.tableText[self.carretLine], 1, self.carretPosition), 2)
+    	local textWidth = dxGetTextWidth(utf8.sub(self.tableText[self.carretLine], 1, self.carretPosition), self.textScale, self.font)
 		dxDrawRectangle(Vector2(self.pos.x+textWidth, self.pos.y+1.5  + (self.carretSize * self.carretLine)-self.carretSize), Vector2(0.8, self.carretSize), self.style.carretColor)
 
 		if getKeyState("backspace") then

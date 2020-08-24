@@ -11,8 +11,8 @@ function Tab:addElement(element)
 	table.insert(self.elements, element)
 end
 
-function Tabpanel:constructor(pos, size, color, hoverColor)
-	self:init(pos, size, color)
+function Tabpanel:constructor(pos, size, style)
+	self:init(pos, size, style)
 	self.tabs = {}
 	self.selectedTab = ""
 	self.tabHeight = 40

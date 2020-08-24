@@ -1,11 +1,12 @@
 List = inherit(Element)
 
-function List:constructor(pos, size, color, hoverColor, textColor, rowHeight)
-	self:initl("", pos, size, color, hoverColor, textColor)
+function List:constructor(pos, size, style, rowHeight)
+	self:init(pos, size, style)
 
 	self.rt = dxCreateRenderTarget(self.size, true)
 	self.rowsHeight, self.schrollCache, self.hoveredRow, self.selectedRow = 0,0,-1,-1
 	self.rowHeight, self.barSize = rowHeight, 10
+	self.margines = 0
 	self.rows = {}
 end
 
@@ -28,7 +29,7 @@ function List:click()
 end
 
 function List:key(key, press)
-	if isMouseInPosition(self.pos, self.size) then
+	if isMouseInPosition(self.pos, self.size) and self.rowsHeight > self.size.y then
 		if key == "mouse_wheel_up" then
 			self.schrollCache = math.max(self.schrollCache - self.rowHeight, 0)
 		elseif key == "mouse_wheel_down" then
@@ -38,24 +39,24 @@ function List:key(key, press)
 end
 
 function List:draw()
-	dxDrawRectangle(self.pos, self.size, self.color, true)
+	self.style:list(self.pos, self.size)
 	dxSetRenderTarget(self.rt, true)
 
 	for i,v in pairs(self.rows) do 
-		local offset = -self.rowHeight + (self.rowHeight * i)
+		local offset = (-self.rowHeight + (self.rowHeight + self.margines) * i) - self.margines
 		local color
 
 		if isMouseInPosition(Vector2(self.pos.x, self.pos.y + offset - self.schrollCache), Vector2(self.size.x-self.barSize, self.rowHeight)) then
-			color = 255 
+			color = false 
 			self.hoveredRow = i
 		else 
 			if self.hoveredRow == i then 
 				self.hoveredRow = -1
 			end
-			color = i % 2 == 0 and 32 or 64
+			color = i % 2
 		end
 
-		dxDrawRectangle(0, offset - self.schrollCache, self.size.x, self.rowHeight, tocolor(color, 0, 0))
+		self.style:row(Vector2(0, offset - self.schrollCache), Vector2(self.size.x, self.rowHeight), color)
 		dxDrawText(v, 0, offset - self.schrollCache, self.size.x, self.rowHeight + offset - self.schrollCache, self.textColor, self.textScale, self.textScale, self.font, "center", "center")
 	end
 
@@ -68,7 +69,7 @@ function List:draw()
 		local scrolly = ratio * self.schrollCache
 
 		local pos, size = Vector2(self.pos.x + self.size.x - self.barSize, self.pos.y + scrolly), Vector2(self.barSize, size)
-		dxDrawRectangle(pos, size, tocolor(0,64,0), true)
+		self.style:bar(pos, size, isMouseInPosition(pos, size))
 
 		local realpos = getRealCursorPosition()
 

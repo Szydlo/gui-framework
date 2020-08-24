@@ -11,8 +11,8 @@ function Tab:addElement(element)
 	table.insert(self.elements, element)
 end
 
-function Tabpanel:constructor(pos, size, color, hoverColor)
-	self:init(pos, size, color)
+function Tabpanel:constructor(pos, size, style)
+	self:init(pos, size, style)
 	self.tabs = {}
 	self.selectedTab = ""
 	self.tabHeight = 40
@@ -46,7 +46,7 @@ function Tabpanel:draw()
 		local color = isMouseInPosition(pos, Vector2(150, self.tabHeight)) and tocolor(64,64,64) or self.color
 
 		dxDrawRectangle(pos, 150, self.tabHeight, color)
-		dxDrawText(v.name, pos, pos + Vector2(150, self.tabHeight), tocolor(255,255,255), 1.3, 1.3, "default", "center", "center")
+		dxDrawText(v.name, pos, pos + Vector2(150, self.tabHeight), tocolor(255,255,255), self.textScale, self.textScale, self.font, "center", "center")
 
 		if v.name == self.selectedTab then
 			for j, k in pairs(v.elements) do 

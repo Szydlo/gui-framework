@@ -30,25 +30,68 @@ function getRealCursorPosition()
 	return xy * wh
 end 
 --end community
+local sx,sy = guiGetScreenSize()
+local baseX = 1920
+local zoom = 1 
+local minZoom = 2
+if sx < baseX then zoom = math.min(minZoom, baseX/sx) end 
+local fonts = {}
+
+function Font(font, size)
+	if not fonts.font then fonts.font = {} end
+	fonts.font[size] = dxCreateFont("assets/fonts/"..font..".ttf", size)
+	return fonts.font[size]
+end
 
 Element = {}
 
-function Element:init(pos, size, color)
-	self.pos, self.size, self.color, self.pressed = pos, size, color, false
+function Element:scale()
+	self.pos = Vector2(self.pos.x/zoom, self.pos.y/zoom)
+	self.size = Vector2(self.size.x/zoom, self.size.y/zoom)
+end
+
+function Element:init(pos, size, style)
+	self.pos, self.size, self.pressed, self.font, self.textScale, self.isScalable, self.style = pos, size, false, "default", 1, config.scale, style
+
+	if self.isScalable then self:scale() end
 
 	elementsToDraw[self] = self
+	elementsToDraw[self].canDraw = true
 end
 
 function Element:drawElement(drawe)
-	elementsToDraw[self] = drawe and self or nil
+	elementsToDraw[self].canDraw = drawe
 end
 
-function Element:initl(text, pos, size, color, hoverColor, textColor)
-	self:init(pos, size, color)
-	self.text, self.hoverColor, self.textColor, self.actualColor = text, hoverColor, textColor, color
+function Element:setPos(pos)
+	self.pos = pos
+	if self.isScalable then self:scale() end
+end
+
+function Element:setSize(size)
+	self.size = size
+	if self.isScalable then self:scale() end
+end
+
+function Element:move(_from, _to, _easing, _time)
+	animations[self] = {from = _from, to = _to, easing = _easing, time = _time, start = getTickCount()}
+
+	if self.elements then
+		for i,v in pairs(self.elements) do 
+			v.from = v.pos
+		end
+	end
 end
 
 function Element:destroy()
+	if self.elements then
+		for i,v in pairs(self.elements) do
+			v:destroy()
+		end
+	end
+
 	elementsToDraw[self] = nil
 	self = nil
 end
+
+-- @ TODO/FIXME SLIDER / GOLDMASTER WERSJA

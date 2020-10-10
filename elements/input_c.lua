@@ -31,6 +31,14 @@ function Input:calculateMaxCharacters()
 	return maxc
 end
 
+function Input:formatText()
+	self.text = table.concat(self.tableText, "\n")
+
+	if self.tableText[1] == self.placeholder then self.text = "" end
+
+	outputChatBox(self.text)
+end
+
 function Input:addText(text)
 	local temp = self.tableText[self.carretLine]..text
 	if self:calculateMaxCharacters() == self.maxCharacters then return end
@@ -43,6 +51,7 @@ function Input:addText(text)
 	end
 
 	self.carretPosition = self.carretPosition + 1
+	self:formatText()
 end
 
 function Input:removeCharacter()
@@ -72,6 +81,8 @@ function Input:removeCharacter()
 		self.tableText[self.carretLine] = utf8.sub(self.tableText[self.carretLine], 1, math.max(0, self.carretPosition-1))..utf8.sub(self.tableText[self.carretLine], self.carretPosition+1)
         self.carretPosition = math.max(0, self.carretPosition-1)
 	end
+
+	self:formatText()
 end
 
 function Input:newLine()

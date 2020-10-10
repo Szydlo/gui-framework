@@ -67,7 +67,7 @@ end
 
 function Element:moveToTop()
 	if self.identity == #elementsToDraw - (self.elements and #self.elements or 0) then return end
-	if self.parent then return elementsToDraw[self.parent]:moveToTop() end
+	if self.parent then return elementsToDraw[self.parent.identity]:moveToTop() end
 
 	local up = #elementsToDraw
 	local canDraw = elementsToDraw[self.identity].canDraw

@@ -1,5 +1,4 @@
 config = {
-	useRt = false,
-	style = nil,
-	scale = true
+	fontPath = "assets/fonts/",
+	scale = false
 }

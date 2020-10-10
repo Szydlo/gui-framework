@@ -17,8 +17,8 @@
 
 	<!-- elements -->
 	<script src="elements/renderer_c.lua" type="client" />
-	<script src="elements/style_c.lua" type="client" />
 	<script src="elements/main_c.lua" type="client" />
+	<script src="elements/style_c.lua" type="client" />
 	<script src="elements/window_c.lua" type="client" />
 	<script src="elements/button_c.lua" type="client" />
 	<script src="elements/input_c.lua" type="client" />

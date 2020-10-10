@@ -3,6 +3,8 @@ Button = inherit(Element)
 function Button:constructor(text, pos, size, style)
 	self:init(pos, size, style)
 	self.text = text
+
+	self.font = self.style.buttonFont
 end
 
 function Button:draw()

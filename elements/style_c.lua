@@ -5,11 +5,16 @@ function Style:constructor()
 	self.textColor = tocolor(240,240,240)
 	self.carretColor = tocolor(230,230,230)
 
+	self.buttonFont = Font("cocogothic", 14)
+	self.inputFont = Font("cocogothic", 12)
+	self.checkboxFont = Font("cocogothic", 14)
+
 	self.textures = {
-		selected = "assets/selected.png",
-		clear = "assets/clear.png"
+		selected = "framework/assets/selected.png",
+		clear = "framework/assets/clear.png"
 	}
 end
+
 function Style:button(pos, size, hovered) 
 	dxDrawRectangle(pos, size, hovered and tocolor(255,255,255) or tocolor(32,32,32))
 end
@@ -52,15 +57,4 @@ function Style:window(pos, size)
 	dxDrawRectangle(pos, size, tocolor(32,32,32))
 end
 
-Login = inherit(Style)
-
-function Login:window(pos, size)
-	dxDrawImage(pos, size, "assets/background.jpg")
-end
-
-function Login:input(pos, size, hovered)
-	dxDrawRectangle(pos, size, tocolor(32,32,32))
-end
-
 styles.normal = new(Style)
-styles.login = new(Login)

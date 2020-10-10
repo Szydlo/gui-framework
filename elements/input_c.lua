@@ -5,6 +5,8 @@ function Input:constructor(placeholder, pos, size, style, maxLines, maxCharacter
 	self.placeholder = placeholder
 	self.text = ""
 	self.carretVisible = false
+	self.align = false
+	self.mask = false
 
 	self.tableText = {}
 	self.tableText[1] = placeholder
@@ -12,6 +14,7 @@ function Input:constructor(placeholder, pos, size, style, maxLines, maxCharacter
 	self.carretPosition = 0
 	self.carretLine = 1
 	self.backspaceTick = 0
+	self.margines = 5
 
 	self.maxCharacters, self.maxLines = maxCharacters or 128, maxLines or 1
 
@@ -19,6 +22,7 @@ function Input:constructor(placeholder, pos, size, style, maxLines, maxCharacter
 
 	self.ekey = bind(Input.keye, self)
 	self.echaracter = bind(Input.character, self)
+	self.font = self.style.inputFont
 end
 
 function Input:calculateMaxCharacters()
@@ -48,7 +52,6 @@ function Input:removeCharacter()
 		if #self.tableText[self.carretLine] == 0 then
 			self.tableText[self.carretLine] = nil
 		elseif #self.tableText > 1 and self.carretLine > 1 then
-			outputChatBox("Xd")
 			self.tableText[self.carretLine-1] = utf8.sub(self.tableText[self.carretLine-1], 1, -2)
 			self.tableText[self.carretLine-1] = self.tableText[self.carretLine-1]..utf8.sub(self.tableText[self.carretLine], 1, 1)
 			self.tableText[self.carretLine] = utf8.sub(self.tableText[self.carretLine], 2)
@@ -91,12 +94,12 @@ function Input:draw()
 	_, self.carretSize = dxGetTextSize("|", 0, self.textScale, self.textScale, self.font)
 	
 	for i,v in pairs(self.tableText) do
-		dxDrawText(v, Vector2(self.pos.x, self.pos.y + (self.carretSize * i)-self.carretSize), self.pos + self.size, self.textColor, self.textScale, self.textScale, self.font)
+		dxDrawText(self.mask and self.placeholder ~= v and string.gsub(v, ".", "*") or v, Vector2(self.pos.x+self.margines, self.pos.y + (self.carretSize * i)-self.carretSize), self.pos + self.size, self.textColor, self.textScale, self.textScale, self.font, self.align and "left" or "left", self.align and "center" or "top")
 	end
 
 	if self.carretVisible then
-    	local textWidth = dxGetTextWidth(utf8.sub(self.tableText[self.carretLine], 1, self.carretPosition), self.textScale, self.font)
-		dxDrawRectangle(Vector2(self.pos.x+textWidth, self.pos.y+1.5  + (self.carretSize * self.carretLine)-self.carretSize), Vector2(0.8, self.carretSize), self.style.carretColor)
+    	local textWidth = dxGetTextWidth(utf8.sub(self.mask and string.gsub(self.tableText[self.carretLine], ".", "*") or self.tableText[self.carretLine], 1, self.carretPosition), self.textScale, self.font)
+		dxDrawRectangle(Vector2(self.pos.x+textWidth+self.margines, self.pos.y + (not self.align and 1.5 or (self.size.y-self.carretSize)/2) + (self.carretSize * self.carretLine)-self.carretSize), Vector2(0.8, self.carretSize), self.style.carretColor)
 
 		if getKeyState("backspace") then
 			local now = getTickCount()
@@ -127,6 +130,18 @@ function Input:click()
 
 	local realpos = getRealCursorPosition()
 	local x, y = dxGetTextSize(string, 0, self.textScale, self.textScale, self.font)
+
+	if self.maxLines == 1 then
+		for i=0, #self.tableText[1] do 
+			local textw = dxGetTextWidth(utf8.sub(self.tableText[1], 1, i), self.textScale, self.font)
+				
+			if (realpos.x - self.pos.x) < textw then
+				self.carretPosition = i
+				return
+			end
+		end
+		return
+	end
 
 	for i=0, math.floor(self.size.y/self.carretSize) do
 		if (i*self.carretSize) > (realpos.y - self.pos.y) then

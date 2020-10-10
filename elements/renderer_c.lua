@@ -27,23 +27,26 @@ addEventHandler("onClientRender", root, function()
 end)
 
 addEventHandler("onClientClick", root, function(button, state)
-	if button == "left" then
+	if button == "left" and isCursorShowing() then
 		if state == "down" then
+			local element = false
+
 			for i,v in pairs(elementsToDraw) do
-				if isCursorShowing() then 
-					if v.click and isMouseInPosition(v.pos, v.size) then
-						v:click()
-					elseif v.deClick then
-						v:deClick()
-					end
+				if v.click and isMouseInPosition(v.pos, v.size) then 
+					element = v 
+				elseif v.deClick then
+					v:deClick()
 				end
 			end
-		elseif state == "up" then
+
+			if element then
+				element:click()
+				element:moveToTop()
+			end
+		elseif state == "up" and isCursorShowing() then
 			for i,v in pairs(elementsToDraw) do
-				if isCursorShowing() then 
-					if v.outClick then
-						v:outClick()
-					end
+				if v.outClick then
+					v:outClick()
 				end
 			end
 		end

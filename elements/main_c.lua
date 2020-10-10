@@ -1,6 +1,6 @@
 --start community
 --https://wiki.multitheftauto.com/wiki/IsMouseInPosition
-function isMouseInPosition (pos, size)
+function isMouseInPosition(pos, size)
 	if ( not isCursorShowing( ) ) then
 		return false
 	end
@@ -12,7 +12,7 @@ function isMouseInPosition (pos, size)
 end
 
 -- Modified version for DX Text
-function isCursorOverText(posX, posY, sizeX, sizeY)
+function isCursorOverText(pos, size)
 	if ( not isCursorShowing( ) ) then
 		return false
 	end
@@ -20,7 +20,7 @@ function isCursorOverText(posX, posY, sizeX, sizeY)
 	local screenWidth, screenHeight = guiGetScreenSize()
 	local cX, cY = (cX*screenWidth), (cY*screenHeight)
 
-	return ( (cX >= posX and cX <= posX+(sizeX - posX)) and (cY >= posY and cY <= posY+(sizeY - posY)) )
+	return ( (cX >= pos.x and cX <= pos.x+(size.x - pos.x)) and (cY >= pos.y and cY <= pos.y+(size.y - pos.y)) )
 end
 
 function getRealCursorPosition()
@@ -32,21 +32,21 @@ end
 --end community
 local sx,sy = guiGetScreenSize()
 local baseX = 1920
-local zoom = 1 
+zoom = 1 
 local minZoom = 2
 if sx < baseX then zoom = math.min(minZoom, baseX/sx) end 
 local fonts = {}
 
-function Font(font, size)
+function Font(font, size, bold)
 	if not fonts.font then fonts.font = {} end
-	fonts.font[size] = dxCreateFont("assets/fonts/"..font..".ttf", size)
+	fonts.font[size] = dxCreateFont(config.fontPath..font..".ttf", size, bold or false)
 	return fonts.font[size]
 end
 
 Element = {}
 
 function Element:scale()
-	self.pos = Vector2(self.pos.x/zoom, self.pos.y/zoom)
+	--self.pos = Vector2(self.pos.x/zoom, self.pos.y/zoom)
 	self.size = Vector2(self.size.x/zoom, self.size.y/zoom)
 end
 
@@ -55,12 +55,30 @@ function Element:init(pos, size, style)
 
 	if self.isScalable then self:scale() end
 
-	elementsToDraw[self] = self
-	elementsToDraw[self].canDraw = true
+	local id = #elementsToDraw+1
+	elementsToDraw[id] = self
+	elementsToDraw[id].canDraw = true
+	self.identity = id
 end
 
 function Element:drawElement(drawe)
-	elementsToDraw[self].canDraw = drawe
+	elementsToDraw[self.identity].canDraw = drawe
+end
+
+function Element:moveToTop()
+	if self.identity == #elementsToDraw - (self.elements and #self.elements or 0) then return end
+	if self.parent then return elementsToDraw[self.parent]:moveToTop() end
+
+	local up = #elementsToDraw
+	local canDraw = elementsToDraw[self.identity].canDraw
+
+	elementsToDraw[up].identity = self.identity
+	elementsToDraw[self.identity].canDraw = elementsToDraw[up].canDraw
+	elementsToDraw[self.identity] = elementsToDraw[up]
+
+	elementsToDraw[up].canDraw = canDraw
+	elementsToDraw[up] = self
+	self.identity = up
 end
 
 function Element:setPos(pos)
@@ -90,7 +108,7 @@ function Element:destroy()
 		end
 	end
 
-	elementsToDraw[self] = nil
+	elementsToDraw[self.identity] = nil
 	self = nil
 end
 
